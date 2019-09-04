@@ -6,7 +6,7 @@ class Player:
     """A player class."""
 
     def __init__(self, room):
-        self.room = room
+        self.current_room = room
 
     def move_to(self, direction):
         self.set_room(getattr(self.room, f'{direction}_to', False))
