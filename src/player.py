@@ -9,10 +9,10 @@ class Player:
         self.current_room = room
 
     def move_to(self, direction):
-        self.set_room(getattr(self.room, f'{direction}_to', False))
+        self.set_room(getattr(self.current_room, f'{direction}_to', False))
 
     def set_room(self, room):
         if (room):
-            self.room = room
+            self.current_room = room
         else:
             print("There is no room in that direction\n\n")
