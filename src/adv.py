@@ -62,4 +62,4 @@ while(True):
     if direction == 'q':
         break
     else:
-        print(direction)
+        player.move_to(direction)
