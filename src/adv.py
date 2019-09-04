@@ -27,7 +27,8 @@ earlier adventurers. The only exit is to the south."""),
 
     'hidden_treasure': Room("Hidden Treasure Chamber", """You've found a hidden treasure chamber!
 It is filled full of amazing treasures!""", [
-        Item("Chalice", "Gold adorned with rubies and diamonds, worth a fortune!"),
+        Item("Chalice", """Gold adorned with rubies and diamonds, worth a fortune!
+"""),
         Item("Gold", "Stacks of pure gold bars, stamped with a raven symbol."),
         Item("Silk", "Fine silk cloth, smoother than..")
     ])
