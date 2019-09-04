@@ -19,9 +19,11 @@ class Player:
             print("There is no room in that direction\n\n")
 
     def take(self, item):
-        print('You pickup the ', item.name)
+        print(f'You pickup the {item.name}')
         self.current_room.items.remove(item)
         self.items.append(item)
 
     def drop(self, item):
-        pass
+        print(f'You have dropped the {item.name} in the {self.current_room}')
+        self.items.remove(item)
+        self.current_room.items.append(item)

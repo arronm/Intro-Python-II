@@ -97,5 +97,11 @@ while(True):
                 if item.name == action[1]
             ]
             player.take(item[0])
+        elif action[0] == 'drop':
+            item = [
+                item for item in player.items
+                if item.name == action[1]
+            ]
+            player.drop(item[0])
         else:
             print('That does not appear to be a valid action.\n')
