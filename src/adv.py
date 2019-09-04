@@ -62,16 +62,30 @@ while(True):
     print(wrapper.fill(f'You are at the {player.current_room.name}'))
     print(wrapper.fill(player.current_room.description))
     if len(player.current_room.items) > 0:
-        print('You see the following items:')
+        print('\nYou see the following items:')
         for i in player.current_room.items:
             print(f'  {i.name} - {i.description}')
+        print('\n')
     else:
-        print('Around you appears to be devoid of items.')
-    direction = input("""Which direction would you like to walk?
-[n], [e], [s], [w]: """)
-    if direction == 'q':
+        print('Around you appears to be devoid of items.\n')
+    prompt = "Please enter your next action.\n"
+
+    if len(player.current_room.items) > 0:
+        itemlist = ''
+        for item in player.current_room.items:
+            itemlist += f'[{item.name}] '
+        prompt += f"take {itemlist}\n"
+
+    prompt += "walk [n] [e] [s] [w]\n> "
+    action = input(prompt)
+    if action == 'q':
         break
-    elif direction == 't':
-        player.take(player.current_room.items[0])
-    else:
-        player.move_to(direction)
+    elif len(action.split(' ')) > 1:
+        action = action.split(' ')
+        if action[0] == 'walk':
+            player.move_to(action[1])
+        if action[0] == 'take':
+            # item = player.current_room.items
+            # player.take(action[1])
+            # take item
+            pass
