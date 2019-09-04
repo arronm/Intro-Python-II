@@ -24,6 +24,13 @@ to north. The smell of gold permeates the air."""),
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
+
+    'hidden_treasure': Room("Hidden Treasure Chamber", """You've found a hidden treasure chamber!
+It is filled full of amazing treasures!""", [
+        Item("Chalice", "Gold adorned with rubies and diamonds, worth a fortune!"),
+        Item("Gold", "Stacks of pure gold bars, stamped with a raven symbol."),
+        Item("Silk", "Fine silk cloth, smoother than..")
+    ])
 }
 
 
@@ -37,6 +44,7 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+room['treasure'].e_to = room['hidden_treasure']
 
 #
 # Main
