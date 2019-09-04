@@ -74,9 +74,9 @@ while(True):
         itemlist = ''
         for item in player.current_room.items:
             itemlist += f'[{item.name}] '
-        prompt += f"take {itemlist}\n"
+        prompt += f"Pickup an item: take {itemlist}\n"
 
-    prompt += "walk [n] [e] [s] [w]\n> "
+    prompt += "Walk in a direction: walk [n] [e] [s] [w]\n> "
     action = input(prompt)
     if action == 'q':
         break
@@ -84,10 +84,11 @@ while(True):
         action = action.split(' ')
         if action[0] == 'walk':
             player.move_to(action[1])
-        if action[0] == 'take':
+        elif action[0] == 'take':
             item = [
-                item.name for item in player.current_room.items
+                item for item in player.current_room.items
                 if item.name == action[1]
             ]
-            print(item)
-            # player.take(action[1])
+            player.take(item[0])
+        else:
+            print('That does not appear to be a valid action.\n')
