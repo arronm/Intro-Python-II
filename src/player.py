@@ -7,3 +7,12 @@ class Player:
 
     def __init__(self, room):
         self.room = room
+
+    def move_to(self, direction):
+        self.set_room(getattr(self.room, f'{direction}_to', False))
+
+    def set_room(self, room):
+        if (room):
+            self.room = room
+        else:
+            print("There is no room in that direction\n\n")
