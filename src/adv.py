@@ -59,6 +59,7 @@ wrapper = textwrap.TextWrapper(width=40)
 
 
 while(True):
+    print('\n')
     print(wrapper.fill(f'You are at the {player.current_room.name}'))
     print(wrapper.fill(player.current_room.description))
     if len(player.current_room.items) > 0:
@@ -68,13 +69,19 @@ while(True):
         print('\n')
     else:
         print('Around you appears to be devoid of items.\n')
-    prompt = "Please enter your next action.\n"
+    prompt = "Please enter an action:\n"
 
     if len(player.current_room.items) > 0:
         itemlist = ''
         for item in player.current_room.items:
             itemlist += f'[{item.name}] '
         prompt += f"Pickup an item: take {itemlist}\n"
+
+    if len(player.items) > 0:
+        inventory = ''
+        for item in player.items:
+            inventory += f'[{item.name}]'
+        prompt += f"Drop an item: drop {inventory}\n"
 
     prompt += "Walk in a direction: walk [n] [e] [s] [w]\n> "
     action = input(prompt)
