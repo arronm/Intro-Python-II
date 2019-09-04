@@ -59,7 +59,11 @@ while(True):
     print(wrapper.fill(player.current_room.name))
     print(wrapper.fill(player.current_room.description))
     if len(player.current_room.items) > 0:
-        print('room has items')
+        print('You see the following around you:')
+        for i in player.current_room.items:
+            print(f'- {i.description}')
+    else:
+        print('Around you appears to be devoid of items.')
     direction = input("""Which direction would you like to walk?
 [n], [e], [s], [w]: """)
     if direction == 'q':
