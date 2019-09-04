@@ -22,3 +22,6 @@ class Player:
         print('You pickup the ', item.name)
         self.current_room.items.remove(item)
         self.items.append(item)
+
+    def drop(self, item):
+        pass

@@ -85,7 +85,9 @@ while(True):
         if action[0] == 'walk':
             player.move_to(action[1])
         if action[0] == 'take':
-            # item = player.current_room.items
+            item = [
+                item.name for item in player.current_room.items
+                if item.name == action[1]
+            ]
+            print(item)
             # player.take(action[1])
-            # take item
-            pass
