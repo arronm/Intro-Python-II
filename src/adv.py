@@ -9,7 +9,10 @@ room = {
                      "North of you, the cave mount beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east.""", [Item("sword", "A rusty sword")]),
+passages run north and east.""", [
+        Item("Sword", "Rusty, and falling apart."),
+        Item("Torch", "A used torch, abandoned by a previous adventurer.")
+    ]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
@@ -56,17 +59,19 @@ wrapper = textwrap.TextWrapper(width=40)
 
 
 while(True):
-    print(wrapper.fill(player.current_room.name))
+    print(wrapper.fill(f'You are at the {player.current_room.name}'))
     print(wrapper.fill(player.current_room.description))
     if len(player.current_room.items) > 0:
-        print('You see the following around you:')
+        print('You see the following items:')
         for i in player.current_room.items:
-            print(f'- {i.description}')
+            print(f'  {i.name} - {i.description}')
     else:
         print('Around you appears to be devoid of items.')
     direction = input("""Which direction would you like to walk?
 [n], [e], [s], [w]: """)
     if direction == 'q':
         break
+    elif direction == 't':
+        player.take(player.current_room.items[0])
     else:
         player.move_to(direction)
