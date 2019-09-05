@@ -26,9 +26,11 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 
     'hidden_treasure': Room("Hidden Treasure Chamber", """You've found a hidden treasure chamber!
-It is filled full of amazing treasures!""", [
-        Item("Chalice", """Gold adorned with rubies and diamonds, worth a fortune!
-"""),
+It is filled with amazing treasures!""", [
+        Item(
+            "Chalice",
+            "Gold adorned with rubies and diamonds, worth a fortune!"
+        ),
         Item("Gold", "Stacks of pure gold bars, stamped with a raven symbol."),
         Item("Silk", "Fine silk cloth, smoother than..")
     ])
@@ -46,6 +48,7 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 room['treasure'].e_to = room['hidden_treasure']
+room['hidden_treasure'].w_to = room['treasure']
 
 #
 # Main
@@ -105,12 +108,18 @@ while(True):
                 item for item in player.current_room.items
                 if item.name == action[1]
             ]
-            player.take(item[0])
+            if len(item) > 0:
+                player.take(item[0])
+            else:
+                print('No such item to pick up.')
         elif action[0] == 'drop':
             item = [
                 item for item in player.items
                 if item.name == action[1]
             ]
-            player.drop(item[0])
+            if len(item) > 0:
+                player.drop(item[0])
+            else:
+                print('No such item to drop.')
         else:
             print('That does not appear to be a valid action.\n')

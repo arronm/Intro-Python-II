@@ -24,6 +24,8 @@ class Player:
         self.items.append(item)
 
     def drop(self, item):
-        print(f'You have dropped the {item.name} in the {self.current_room}')
+        print(
+            f'You have dropped the {item.name} in the {self.current_room.name}'
+        )
         self.items.remove(item)
         self.current_room.items.append(item)
