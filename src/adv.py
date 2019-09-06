@@ -1,5 +1,7 @@
+import textwrap
+from player import Player
 from room import Room
-
+from item import Item
 # Declare all the rooms
 
 room = {
@@ -7,7 +9,10 @@ room = {
                      "North of you, the cave mount beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", [
+        Item("Sword", "Rusty, and falling apart."),
+        Item("Torch", "A used torch, abandoned by a previous adventurer.")
+    ]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
@@ -19,6 +24,16 @@ to north. The smell of gold permeates the air."""),
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
+
+    'hidden_treasure': Room("Hidden Treasure Chamber", """You've found a hidden treasure chamber!
+It is filled with amazing treasures!""", [
+        Item(
+            "Chalice",
+            "Gold adorned with rubies and diamonds, worth a fortune!"
+        ),
+        Item("Gold", "Stacks of pure gold bars, stamped with a raven symbol."),
+        Item("Silk", "Fine silk cloth, smoother than..")
+    ])
 }
 
 
@@ -32,12 +47,16 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+room['treasure'].e_to = room['hidden_treasure']
+room['hidden_treasure'].w_to = room['treasure']
 
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player(room['outside'])
+wrapper = textwrap.TextWrapper(width=40)
 
 # Write a loop that:
 #
@@ -49,3 +68,58 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+while(True):
+    print('\n')
+    print(wrapper.fill(f'You are at the {player.current_room.name}'))
+    print(wrapper.fill(player.current_room.description))
+    if len(player.current_room.items) > 0:
+        print('\nYou see the following items:')
+        for i in player.current_room.items:
+            print(f'  {i.name} - {i.description}')
+        print('\n')
+    else:
+        print('Around you appears to be devoid of items.\n')
+    prompt = "Please enter an action:\n"
+
+    if len(player.current_room.items) > 0:
+        itemlist = ''
+        for item in player.current_room.items:
+            itemlist += f'[{item.name}] '
+        prompt += f"Pickup an item: take {itemlist}\n"
+
+    if len(player.items) > 0:
+        inventory = ''
+        for item in player.items:
+            inventory += f'[{item.name}]'
+        prompt += f"Drop an item: drop {inventory}\n"
+
+    prompt += "Walk in a direction: walk [n] [e] [s] [w]\n> "
+    action = input(prompt)
+    if action == 'q':
+        break
+    elif len(action.split(' ')) > 1:
+        action = action.split(' ')
+        if action[0] == 'walk':
+            player.move_to(action[1])
+        elif action[0] == 'take':
+            item = [
+                item for item in player.current_room.items
+                if item.name == action[1]
+            ]
+            if len(item) > 0:
+                player.take(item[0])
+            else:
+                print('No such item to pick up.')
+        elif action[0] == 'drop':
+            item = [
+                item for item in player.items
+                if item.name == action[1]
+            ]
+            if len(item) > 0:
+                player.drop(item[0])
+            else:
+                print('No such item to drop.')
+        else:
+            print('That does not appear to be a valid action.\n')
